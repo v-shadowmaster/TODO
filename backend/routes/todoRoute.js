@@ -7,8 +7,6 @@ const {
   toggleTodoStatus,
 } = require("../controllers/TodoController");
 
-console.log(router);
-
 router.get("/todos", getTodos);
 
 router.post("/todo/new", createTodo);

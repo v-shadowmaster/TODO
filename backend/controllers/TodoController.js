@@ -8,6 +8,7 @@ const getTodos = async (request, response) => {
 
 // creating a new todo
 const createTodo = (request, response) => {
+  console.log(request.body.title);
   const todo = new Todo({
     title: request.body.title,
     completed: request.body.completed,
