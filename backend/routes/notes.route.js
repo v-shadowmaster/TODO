@@ -1,20 +1,18 @@
 const express = require("express");
-const notesModel = require("../models/notes.model");
+const {
+  createNote,
+  deleteNote,
+  getAllNotes,
+  getNoteById,
+} = require("../controllers/notes.controller");
 
 const router = express.Router();
+router.post("/", createNote);
 
-router.post("/", async (req, res) => {
-  try {
-    const { title, content } = req.body;
-    const newNote = notesModel.create({
-      title,
-      content,
-    });
+router.get("/", getAllNotes);
 
-    await newNote.save();
+router.get("/:id", getNoteById);
 
-    res.status(500).json(newNote);
-  } catch (err) {}
-});
+router.delete("/:id", deleteNote);
 
 module.exports = router;

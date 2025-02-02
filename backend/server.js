@@ -1,21 +1,21 @@
 const express = require("express");
-const mongoose = require("mongoose");
 const cors = require("cors");
-const notesRoute = require("./routes/notes.route");
+const mongoose = require("mongoose");
+const dotenv = require("dotenv");
 
-mongoose
-  .connect("mongodb://localhost:27017/notes", {})
-  .then(() => {
-    console.log("Connected to MongoDB");
-  })
-  .catch((err) => {
-    console.error("Error connecting to MongoDB:", err);
-  });
+dotenv.config();
 
 const app = express();
-
 app.use(express.json());
+app.use(cors());
 
-app.use("/notes", notesRoute);
+const notesRoutes = require("./routes/notes.route");
 
-app.listen(8000, () => console.log("server started"));
+app.use("/notes", notesRoutes);
+
+mongoose
+  .connect(`mongodb://localhost:27017/notesApp`)
+  .then(() =>
+    app.listen(8000, () => console.log(`Server started on port 8000`))
+  )
+  .catch((err) => console.log(err));
