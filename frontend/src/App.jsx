@@ -1,9 +1,12 @@
 import React from "react";
 import Login from "./components/Login";
+import CreateNote from "./components/CreateNote";
+import NotesList from "./components/NotesList";
 function App() {
   return (
     <div>
-      <Login />
+      <CreateNote />
+      <NotesList />
     </div>
   );
 }
