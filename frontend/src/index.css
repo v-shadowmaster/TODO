@@ -1,5 +1,8 @@
 /* Removed JavaScript import statements as they are not supported in CSS files */
-
+@import "tailwindcss";
+body {
+  margin: auto;
+}
 .container {
   display: flex;
   justify-content: center;
