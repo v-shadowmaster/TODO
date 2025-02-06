@@ -1,0 +1,7 @@
+/* Removed JavaScript import statements as they are not supported in CSS files */
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
