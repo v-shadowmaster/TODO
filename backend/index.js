@@ -6,8 +6,9 @@ const dotenv = require("dotenv");
 const jwt = require("jsonwebtoken");
 const { authenticateToken } = require("./utilities");
 const user = require("./models/user.model");
+const Note = require("./models/note.module");
 
-//eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3Mzg4NjA2MzgsImV4cCI6MTczODg2MjQzOH0.R6IS3nvt7OBzyHbsEMu7XBOGjbN8Yy4_EH_SiEJ_Vvs
+//eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY3YTRlODVlOTZhMjI1YmNmYTQ5YTUwMCIsIm5hbWUiOiJ2aW5heSBrdW1hciIsImVtYWlsIjoidmluaUBnbWFpbC5jb20iLCJwYXNzd29yZCI6IjEyMzQ1Njc4IiwiY3JlYXRlZE9uIjoiMjAyNS0wMi0wNlQxNjo1MDozMC42NzlaIiwiX192IjowfSwiaWF0IjoxNzM5MDgyMjY4LCJleHAiOjE3MzkyOTgyNjh9.9QKzyOBoE4gOuuG3AAltd1XLTPUMKU-52QXk49oq04M
 
 dotenv.config();
 
@@ -83,10 +84,60 @@ app.post("/login", async (req, res) => {
     return res.status(400).json({ message: "user not found" });
   }
 
+  if (userInfo.email == email && userInfo.password == password) {
+    const user = { user: userInfo };
+    const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
+      expiresIn: "3600m",
+    });
 
-  if (userInfo.email == email && userInfo.password == password)
-  {
-    
+    return res.json({
+      error: false,
+      message: "Login Successful",
+      email,
+      accessToken,
+    });
+  } else {
+    return res.status(400).json({
+      error: true,
+      message: "Invalid Crendentials",
+    });
+  }
+});
+
+app.post("/add-note", authenticateToken, async (req, res) => {
+  const { title, content, tags } = req.body;
+  const { user } = req.user;
+
+  if (!title) {
+    return res.status(400).json({ error: true, message: "Title is required" });
+  }
+
+  if (!content) {
+    return res
+      .status(400)
+      .json({ error: true, message: "COntent is required" });
+  }
+
+  try {
+    const note = new Note({
+      title,
+      content,
+      tags: tags || [],
+      userId: user._id,
+    });
+
+    await note.save();
+
+    return res.json({
+      error: false,
+      note,
+      message: "Note added successfully",
+    });
+  } catch (err) {
+    return res.status(500).json({
+      error: true,
+      message: "NOte not added",
+    });
   }
 });
 
