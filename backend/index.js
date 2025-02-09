@@ -8,8 +8,6 @@ const { authenticateToken } = require("./utilities");
 const user = require("./models/user.model");
 const Note = require("./models/note.module");
 
-//eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY3YTRlODVlOTZhMjI1YmNmYTQ5YTUwMCIsIm5hbWUiOiJ2aW5heSBrdW1hciIsImVtYWlsIjoidmluaUBnbWFpbC5jb20iLCJwYXNzd29yZCI6IjEyMzQ1Njc4IiwiY3JlYXRlZE9uIjoiMjAyNS0wMi0wNlQxNjo1MDozMC42NzlaIiwiX192IjowfSwiaWF0IjoxNzM5MDgyMjY4LCJleHAiOjE3MzkyOTgyNjh9.9QKzyOBoE4gOuuG3AAltd1XLTPUMKU-52QXk49oq04M
-
 dotenv.config();
 
 app.use(express.json());
@@ -44,9 +42,10 @@ app.post("/create-account", async (req, res) => {
   if (isUser) {
     return res.json({
       error: true,
-      message: "user already exists",
+      message: "User already exists",
     });
   }
+
   const newUser = new user({
     name,
     email,
@@ -55,9 +54,13 @@ app.post("/create-account", async (req, res) => {
 
   await newUser.save();
 
-  const accessToken = jwt.sign({ user }, process.env.ACCESS_TOKEN_SECRET, {
-    expiresIn: "30m",
-  });
+  const accessToken = jwt.sign(
+    { user: newUser },
+    process.env.ACCESS_TOKEN_SECRET,
+    {
+      expiresIn: "30m",
+    }
+  );
 
   return res.json({
     error: false,
@@ -87,7 +90,7 @@ app.post("/login", async (req, res) => {
   if (userInfo.email == email && userInfo.password == password) {
     const user = { user: userInfo };
     const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
-      expiresIn: "3600m",
+      expiresIn: "10m",
     });
 
     return res.json({
@@ -139,6 +142,12 @@ app.post("/add-note", authenticateToken, async (req, res) => {
       message: "NOte not added",
     });
   }
+});
+
+app.get("/all", authenticateToken, (req, res) => {
+  const user = req.user;
+
+  console.log(user);
 });
 
 app.listen(8000, () => console.log("server started"));
