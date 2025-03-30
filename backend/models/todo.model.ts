@@ -26,9 +26,13 @@ const todoSchema = new mongoose.Schema({
     },
     progress : {
         type : String,
-        enum : ["due", "pending" , "completed"],
-        default : "due",
+        enum : ["Not Started", "In Progress" , "Completed"],
+        default : "Not Started",
     },
+    completed : {
+        type : Boolean,
+        default : false
+    }
 
     // user : {
     //     type: mongoose.Schema.Types.ObjectId,
