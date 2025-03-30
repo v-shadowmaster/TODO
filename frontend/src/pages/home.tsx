@@ -21,8 +21,7 @@ const todos = [{
     completed: false,
     priority: "high",
     status: "Not Started",
-    dueDate: new Date(2024, 11, 15),
-    tags: ["demo", "shortcut"],
+    dueDate: new Date(),
 },
 {
     id: "2",
@@ -30,7 +29,7 @@ const todos = [{
     completed: false,
     priority: "medium",
     status: "Not Started",
-    tags: ["getting-started"],
+    dueDate: new Date(),
 },]
 
 const TodoApp = () => {
@@ -56,8 +55,6 @@ const TodoApp = () => {
                         </DialogHeader>
                     </DialogContent>
                 </Dialog>
-                
-
             </div>
         </div >
     )
