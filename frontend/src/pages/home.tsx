@@ -15,7 +15,7 @@ interface Todo {
 }
 
 
-const todos = [ {
+const todos = [{
     id: "1",
     text: "Press ⌘K to open command palette",
     completed: false,
@@ -23,15 +23,15 @@ const todos = [ {
     status: "Not Started",
     dueDate: new Date(2024, 11, 15),
     tags: ["demo", "shortcut"],
-  },
-  {
+},
+{
     id: "2",
     text: "Try adding a new todo",
     completed: false,
     priority: "medium",
     status: "Not Started",
     tags: ["getting-started"],
-  },]
+},]
 
 const TodoApp = () => {
 
@@ -56,8 +56,8 @@ const TodoApp = () => {
                         </DialogHeader>
                     </DialogContent>
                 </Dialog>
-
                 
+
             </div>
         </div >
     )
