@@ -18,11 +18,11 @@ const App = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    //check if user is logged in an app start
+    // Only check for user on initial mount
     const currentUser = getCurrentUser();
     setUser(currentUser);
     setLoading(false);
-  }, []);
+  }, []); // Empty dependency array - only runs once
 
   if (loading) return <div>Loading.......</div>;
 
@@ -32,32 +32,36 @@ const App = () => {
         <Route
           path="/login"
           element={
-            !user ? <Login setUser={setUser} /> : <Navigate to="/dashboard" />
+            user ? (
+              <Navigate to="/dashboard" replace />
+            ) : (
+              <Login setUser={setUser} />
+            )
           }
         />
         <Route
           path="/register"
           element={
-            !user ? (
-              <Register setUser={setUser} />
+            user ? (
+              <Navigate to="/dashboard" replace />
             ) : (
-              <Navigate to="/dashboard" />
+              <Register setUser={setUser} />
             )
           }
         />
         <Route
           path="/dashboard"
           element={
-            user ? (
-              <Dashboard user={user} setUser={setUser} />
+            !user ? (
+              <Navigate to="/login" replace />
             ) : (
-              <Navigate to="/login" />
+              <Dashboard user={user} setUser={setUser} />
             )
           }
         />
         <Route
           path="/"
-          element={<Navigate to={user ? "/dashboard" : "/login"} />}
+          element={<Navigate to={user ? "/dashboard" : "/login"} replace />}
         />
       </Routes>
     </Router>
