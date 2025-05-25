@@ -1,14 +1,14 @@
-# Realtime Todo Application - Client
+# Todo Application - Client
 
-A modern, responsive React application for managing todos in real-time, built with Vite, React, and TailwindCSS.
+React frontend for the todo application built with Vite and TailwindCSS.
 
 ## 📋 Features
 
 - User Authentication (Login/Register)
-- Real-time Todo Management
-- Responsive Design
-- Search Functionality
-- Modern UI with TailwindCSS
+- Create, Read, Update, Delete Todos
+- Search Bar
+- Todo Item Accordion View
+- Material UI Icons Integration
 
 ## 🚀 Getting Started
 

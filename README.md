@@ -1,18 +1,14 @@
-# 📝 Realtime Todo Application
+# 📝 Todo Application
 
-A full-stack real-time todo application built with React, Node.js, Express, and MongoDB. This application provides a modern, responsive interface for managing todos with real-time updates and user authentication.
+A full-stack todo application built with React, Node.js, Express, and MongoDB, featuring user authentication and todo management.
 
 ## 🌟 Features
 
-- User Authentication
-- Real-time Todo Management
-- Responsive Design
-- Search and Filter Capabilities
+- User Authentication (Login/Register)
+- Todo CRUD Operations
+- JWT-based Authentication
 - Modern UI with TailwindCSS
-- RESTful API
 - MongoDB Integration
-- JWT Authentication
-- Secure by Design
 
 ## 🏗️ Architecture
 

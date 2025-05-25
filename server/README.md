@@ -1,43 +1,50 @@
-# Realtime Todo Application - Server
+# Todo Application - Server
 
-A robust Node.js/Express backend service for the Realtime Todo Application with MongoDB integration.
-
-## 🏗️ Architecture
-
-```mermaid
-graph TB
-    subgraph "Backend (Node.js/Express)"
-        I[Express Server] --> J[Auth Routes]
-        I --> K[Todo Routes]
-        I --> L[Auth Middleware]
-
-        J --> M[Auth Controller]
-        K --> N[Todo Controller]
-
-        M --> O[User Model/Database]
-        N --> P[Todo Model/Database]
-
-        L --> Q{Verify JWT}
-        Q -->|Valid| R[Allow Access]
-        Q -->|Invalid| S[Return 401 Error]
-    end
-
-    subgraph "Database (MongoDB)"
-        O --> T[(Users Collection)]
-        P --> U[(Todos Collection)]
-    end
-```
+Node.js/Express backend service with MongoDB integration.
 
 ## 📋 Features
 
-- RESTful API Design
+- RESTful API Endpoints
 - JWT Authentication
-- MongoDB Integration
-- Input Validation
+- MongoDB with Mongoose
+- Protected Routes
 - Error Handling
-- Middleware Support
-- Environment Configuration
-- Security Best Practices
+
+## 🛠️ API Endpoints
+
+### Auth Routes
+
+- `POST /api/auth/register` - Register new user
+- `POST /api/auth/login` - Login user
+
+### Todo Routes (Protected)
+
+- `GET /api/todos` - Get all todos
+- `POST /api/todos` - Create todo
+- `PUT /api/todos/:id` - Update todo
+- `DELETE /api/todos/:id` - Delete todo
+
+## 🗄️ Models
+
+### User Model
+
+```javascript
+{
+  name: String,    // required
+  email: String,   // required, unique
+  password: String // required, hashed
+}
+```
+
+### Todo Model
+
+````javascript
+{
+  title: String,       // required
+  description: String, // optional
+  completed: Boolean,  // default: false
+  user: ObjectId       // reference to User
+}
 
 ## 🚀 Getting Started
 
@@ -54,7 +61,7 @@ graph TB
    ```bash
    git clone <repository-url>
    cd realtime-todo/server
-   ```
+````
 
 2. Install dependencies:
 
