@@ -16,8 +16,8 @@ const getTodos = async (request, response, next) => {
             data: todos
         })
     } catch (error) {
-        console.error('Get todos error:', err);
-        next(err);
+        console.error('Get todos error:', error);
+        next(error);
     }
 }
 
@@ -29,7 +29,7 @@ const getTodos = async (request, response, next) => {
  */
 
 
-const createTodos = async (request, response, next) => {
+const createTodo = async (request, response, next) => {
     try {
 
         const { title, description } = request.body;
@@ -59,14 +59,14 @@ const createTodos = async (request, response, next) => {
 
 const updateTodo = async (request, response, next) => {
     try {
-        let todo = await Todo.findById(req.params.id);
-        if (!todo || todo.user.toString() !== req.user._id.toString()) {
-            return res.status(404).json({ success: false, error: 'Todo not found' });
+        let todo = await Todo.findById(request.params.id);
+        if (!todo || todo.user.toString() !== request.user._id.toString()) {
+            return response.status(404).json({ success: false, error: 'Todo not found' });
         }
 
         todo = await Todo.findByIdAndUpdate(
-            req.params.id,
-            req.body,
+            request.params.id,
+            request.body,
             { new: true, runValidators: true }
         );
         return response.status(200).json({
@@ -87,12 +87,12 @@ const updateTodo = async (request, response, next) => {
 
 const deleteTodo = async (request, response, next) => {
     try {
-        const todo = await Todo.findById(req.params.id);
-        if (!todo || todo.user.toString() !== req.user._id.toString()) {
-            return res.status(404).json({ success: false, error: 'Todo not found' });
+        const todo = await Todo.findById(request.params.id);
+        if (!todo || todo.user.toString() !== request.user._id.toString()) {
+            return response.status(404).json({ success: false, error: 'Todo not found' });
         }
 
-        await todo.remove();
+        await Todo.findByIdAndDelete(request.params.id);
         return response.status(200).json({ success: true, data: {} });
     } catch (err) {
         console.error('Delete todo error:', err);
@@ -100,6 +100,6 @@ const deleteTodo = async (request, response, next) => {
     }
 };
 
-module.exports = { getTodos, createTodos, updateTodo, deleteTodo }
+module.exports = { getTodos, createTodo, updateTodo, deleteTodo }
 
 

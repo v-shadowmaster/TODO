@@ -13,6 +13,7 @@ const auth = async (request, response, next) => {
     // Check for Authorization header
     if (request.headers.authorization && request.headers.authorization.startsWith('Bearer ')) {
         // Get token from header
+
         token = request.headers.authorization.split(' ')[1];
     }
 

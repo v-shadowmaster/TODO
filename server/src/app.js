@@ -22,8 +22,10 @@ app.use(express.json());
 
 // Routers 
 const authRoutes = require('./routes/authRoutes');
+const todoRoutes = require("./routes/todoRoutes");
 
-app.use("/api/auth", authRoutes)
+app.use("/api/auth", authRoutes);
+app.use("/api/todos", todoRoutes);
 
 
 app.get("/api/test", (request, response) => response.json({ message: "api working" }))
